@@ -138,6 +138,13 @@ const app = {
     labelElement.textContent = task.title;
     // on change le type de champ pour avoir une checkbox
     checkboxElement.type = 'checkbox';
+    // on écoute le fait que la case soit cochée ou décochée
+    checkboxElement.addEventListener('change', function(event) {
+      // on veut ajouter ou supprimer la classe 'list-item--done' sur le li
+      // element.classList.toggle('unclasse'); ajouter la classe s'il n'est y est pas sinon elle sera supprimée
+      // event.target.closest('li').classList.toggle('list-item--done');
+      taskElement.classList.toggle('list-item--done');
+    });
     // la propriété checked permet de choisir si oui ou non l'input sera cochée par défaut
     checkboxElement.checked = task.done;
     // je mets la checkbox au début du label
