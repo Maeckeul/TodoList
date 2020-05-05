@@ -40,6 +40,7 @@ const tasks = [
 ];
 
 const app = {
+  counter: 2,
   init: function() {
     app.todoElement = document.getElementById('todo');
     // construire un form
@@ -75,7 +76,18 @@ const app = {
     const counterElement = document.createElement('p');
     // configurer
     counterElement.classList.add('counter');
-    counterElement.textContent = 'Aucune tâche en cours';
+    // si le nombre de tâche en cours est 0
+    if (app.counter === 0) {
+      counterElement.textContent = 'Aucune tâche en cours';
+    }
+    // sinon s'il y en a une on met au singulier
+    else if (app.counter === 1) {
+      counterElement.textContent = 'Une tâche en cours';
+    }
+    // sinon on met au pluriel
+    else {
+      counterElement.textContent = `${app.counter} tâches en cours`;
+    }
     // insérer dans un parent
     app.todoElement.appendChild(counterElement);
   },
