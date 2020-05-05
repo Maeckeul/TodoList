@@ -59,12 +59,31 @@ const app = {
       // appel de la méthode qui crée la tâche
       // je dois transmettre en argument un objet représentant la tâche à ajouter
       // event.target[0] représente l'input
+      console.log(event);
       app.createTask({
         done: false,
         title: event.target[0].value,
       });
       // vider le champ
       event.target[0].value = '';
+      // mettre à jour le compteur
+      app.counter++;
+      app.updateCounter();
+    }
+  },
+  updateCounter: function() { 
+    // autre approche possible, en lisant le dom
+    // document.querySelectorAll('li:not(.list-item--done)').length;
+    if (app.counter === 0) {
+      app.counterElement.textContent = 'Aucune tâche en cours';
+    }
+    // sinon s'il y en a une on met au singulier
+    else if (app.counter === 1) {
+      app.counterElement.textContent = 'Une tâche en cours';
+    }
+    // sinon on met au pluriel
+    else {
+      app.counterElement.textContent = `${app.counter} tâches en cours`;
     }
   },
   createForm: function() {
@@ -92,23 +111,13 @@ const app = {
   },
   createCounter: function() {
     // créer
-    const counterElement = document.createElement('p');
+    app.counterElement = document.createElement('p');
     // configurer
-    counterElement.classList.add('counter');
+    app.counterElement.classList.add('counter');
     // si le nombre de tâche en cours est 0
-    if (app.counter === 0) {
-      counterElement.textContent = 'Aucune tâche en cours';
-    }
-    // sinon s'il y en a une on met au singulier
-    else if (app.counter === 1) {
-      counterElement.textContent = 'Une tâche en cours';
-    }
-    // sinon on met au pluriel
-    else {
-      counterElement.textContent = `${app.counter} tâches en cours`;
-    }
+    app.updateCounter();
     // insérer dans un parent
-    app.todoElement.appendChild(counterElement);
+    app.todoElement.appendChild(app.counterElement);
   },
   createList: function() {
     // créer un ul
@@ -144,6 +153,16 @@ const app = {
       // element.classList.toggle('unclasse'); ajouter la classe s'il n'est y est pas sinon elle sera supprimée
       // event.target.closest('li').classList.toggle('list-item--done');
       taskElement.classList.toggle('list-item--done');
+      // si on coche la case :
+      // element.classList.contains() retourne true ou false suivant si la class est présente
+      if (taskElement.classList.contains('list-item--done')) {
+        app.counter--;
+      }
+      // sinon c'est qu'on la décoche
+      else {
+        app.counter++;
+      }
+      app.updateCounter();
     });
     // la propriété checked permet de choisir si oui ou non l'input sera cochée par défaut
     checkboxElement.checked = task.done;
