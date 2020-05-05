@@ -19,8 +19,25 @@ Objectif : construire une todolist intéractive
   - construire un compteur
   - construire une liste
 - gérer les intréractions
+  - gérer la soumission du form pour créer une tâche
+  - cocher les cases
+  - gérer le compteur
 */
 
+const tasks = [
+  {
+    title: 'Coder une todolist en javascript vanilla',
+    done: true,
+  },
+  {
+    title: 'Coder une todolist avec React',
+    done: false,
+  },
+  {
+    title: 'Coder facebook',
+    done: false,
+  },
+];
 
 const app = {
   init: function() {
@@ -29,6 +46,8 @@ const app = {
     app.createForm();
     // constuire un compteur
     app.createCounter();
+    // construire une liste
+    app.createList();
   },
   createForm: function() {
     // - créer un élement form
@@ -60,6 +79,43 @@ const app = {
     // insérer dans un parent
     app.todoElement.appendChild(counterElement);
   },
+  createList: function() {
+    // créer un ul
+    app.listElement = document.createElement('ul');
+    // la configurer
+    app.listElement.classList.add('list');
+    // ajouter des tâches initiales
+    tasks.forEach(app.createTask);
+    // l'insérer
+    app.todoElement.appendChild(app.listElement);
+  },
+  createTask: function(task) {
+    // créer un li
+    const taskElement = document.createElement('li');
+    // créer un input
+    const checkboxElement = document.createElement('input');
+    // créer un label
+    const labelElement = document.createElement('label');
+    // on ajoute uen classe sur le li
+    taskElement.classList.add('list-item');
+    // si task.done est vrai (si la tâche est finie)
+    if (task.done) {
+      // alors j'applique une class pour différencier les styles
+      taskElement.classList.add('list-item--done');
+    }
+    // on écrit dans le label
+    labelElement.textContent = task.title;
+    // on change le type de champ pour avoir une checkbox
+    checkboxElement.type = 'checkbox';
+    // la propriété checked permet de choisir si oui ou non l'input sera cochée par défaut
+    checkboxElement.checked = task.done;
+    // je mets la checkbox au début du label
+    labelElement.prepend(checkboxElement);
+    // je mets le label à la fin du li
+    taskElement.appendChild(labelElement);
+    // je mets le li dans ul
+    app.listElement.appendChild(taskElement);
+  }
 };
 
 

@@ -34,3 +34,16 @@ body {
     border-bottom: 1px solid white;
     padding-bottom: 1rem;
 }
+
+.list-item label {
+    display: block;
+    background-color: #eee;
+    padding: 1rem;
+    border-radius: 4px;
+    margin: 0.5rem 0;
+}
+
+.list-item--done {
+    opacity: 0.5;
+    text-decoration: line-through;
+}
