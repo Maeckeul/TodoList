@@ -50,11 +50,30 @@ const app = {
     // construire une liste
     app.createList();
   },
+  handleSubmit: function(event) {
+    // j'empeche la soumission par défaut du formulaire
+    event.preventDefault();
+    // on vérifie que la valeur du champ n'est pas vide
+    // trim() retirer les espaces en début et en fin d'une chaine de caractère 
+    if (event.target[0].value.trim() !== '') {
+      // appel de la méthode qui crée la tâche
+      // je dois transmettre en argument un objet représentant la tâche à ajouter
+      // event.target[0] représente l'input
+      app.createTask({
+        done: false,
+        title: event.target[0].value,
+      });
+      // vider le champ
+      event.target[0].value = '';
+    }
+  },
   createForm: function() {
     // - créer un élement form
     const formElement = document.createElement('form');
     // - le configurer (lui mettre une classe ...)
     formElement.classList.add('form');
+    // ajouter un écouteur pour savoir quand l'utilisateur cherche à soumettre le form 
+    formElement.addEventListener('submit', app.handleSubmit);
     // - l'insérer dans le DOM
     //   - insèrer le form dans le parent
     app.todoElement.appendChild(formElement);
