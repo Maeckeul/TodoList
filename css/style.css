@@ -26,3 +26,11 @@ body {
 .form-input::placeholder {
     color: rgba(255, 255, 255, .5);
 }
+
+.counter {
+    color: white;
+    font-size: 1.5em;
+    margin-top: 3rem;
+    border-bottom: 1px solid white;
+    padding-bottom: 1rem;
+}
